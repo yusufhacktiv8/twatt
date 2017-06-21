@@ -28,4 +28,32 @@ router.get('/timelines', function(req, res) {
     });
 });
 
+router.get('/search', function(req, res) {
+  const keyword = req.query.keyword ? req.query.keyword : '';
+  const url =  `https://api.twitter.com/1.1/search/tweets.json?q=${keyword}&count=1`;
+  req.app.locals.oauth.get(
+    url,
+    process.env.TOKEN,
+    process.env.TOKEN_SECRET,
+    function (e, data, resp) {
+      if (e) console.error(e);
+      console.log(data);
+      res.send(data);
+    });
+});
+
+router.post('/addtweet', function(req, res) {
+  const tweet = req.body;
+  const url =  `https://api.twitter.com/1.1/search/tweets.json?q=${keyword}&count=1`;
+  req.app.locals.oauth.get(
+    url,
+    process.env.TOKEN,
+    process.env.TOKEN_SECRET,
+    function (e, data, resp) {
+      if (e) console.error(e);
+      console.log(data);
+      res.send(data);
+    });
+});
+
 module.exports = router;
