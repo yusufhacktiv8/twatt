@@ -1,7 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const dotenv = require('dotenv').config();
+require('dotenv').config();
 
 router.get('/test', (req, res) => {
   req.app.locals.oauth.get(
@@ -43,12 +43,14 @@ router.get('/search', function(req, res) {
 });
 
 router.post('/addtweet', function(req, res) {
-  const tweet = req.body;
-  const url =  `https://api.twitter.com/1.1/search/tweets.json?q=${keyword}&count=1`;
-  req.app.locals.oauth.get(
+  const tweet = req.body.tweet;
+  const url = `https://api.twitter.com/1.1/statuses/update.json?status=${tweet}`;
+  req.app.locals.oauth.post(
     url,
     process.env.TOKEN,
     process.env.TOKEN_SECRET,
+    '',
+    'text/plain',
     function (e, data, resp) {
       if (e) console.error(e);
       console.log(data);
